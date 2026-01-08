@@ -1,38 +1,17 @@
-# SMS Webhook API - TEST
-API Webhook pour réceptionner et traiter les requêtes SMS OTP depuis Salesforce.
+# SMS Webhook API
 
-## 🚀 Endpoints
+API pour recevoir les webhooks SMS depuis Salesforce.
 
-### Health Check
-```bash
-GET /
-GET /health
-```
+## Endpoints
 
-### Webhook SMS
-```bash
-POST /webhook/sms
-Headers: X-API-Key: YOUR_SECRET_KEY
-Body: {
-  "mobileNumber": "+33754569164",
-  "messageText": "TEST - Code: 123456",
-  "messageKey": "OTP_12345",
-  "shortCode": "12345"
-}
-```
+- GET / - Health check
+- POST /webhook/sms - Webhook principal (auth required)
+- POST /test/sms - Test endpoint (auth required)
 
-## 🔒 Sécurité
+## Auth
 
-L'API nécessite une clé API dans le header `X-API-Key`.
+Header: `X-API-Key: YOUR_SECRET_KEY`
 
-Configurer via variable d'environnement `API_KEY` sur Render.
+## Deploy
 
-## 🛠️ Développement Local
-```bash
-npm install
-npm start
-```
-
-## 📦 Déploiement
-
-Déployé automatiquement sur Render.com depuis GitHub.
+Auto-deployed on Render.com from GitHub.
