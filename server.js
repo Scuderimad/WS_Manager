@@ -29,6 +29,14 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'healthy',
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString()
+    });
+});
+
 app.post('/webhook/sms', authenticate, (req, res) => {
     console.log('===================================');
     console.log('SMS WEBHOOK RECEIVED');
@@ -39,6 +47,7 @@ app.post('/webhook/sms', authenticate, (req, res) => {
     const { mobileNumber, messageText, messageKey, shortCode } = req.body;
     
     if (!mobileNumber || !messageText) {
+        console.log('ERROR: Missing required fields');
         return res.status(400).json({
             success: false,
             error: 'mobileNumber and messageText required'
@@ -48,7 +57,7 @@ app.post('/webhook/sms', authenticate, (req, res) => {
     console.log('SMS validated:');
     console.log('  Phone:', mobileNumber);
     console.log('  Message:', messageText);
-    console.log('  Key:', messageKey);
+    console.log('  Key:', messageKey || 'N/A');
     console.log('===================================');
     
     const response = {
@@ -59,17 +68,17 @@ app.post('/webhook/sms', authenticate, (req, res) => {
         timestamp: new Date().toISOString()
     };
     
-    console.log('Response:', JSON.stringify(response, null, 2));
+    console.log('Response sent:', JSON.stringify(response, null, 2));
     
     res.json(response);
 });
 
 app.post('/test/sms', authenticate, (req, res) => {
-    console.log('TEST SMS:', JSON.stringify(req.body, null, 2));
+    console.log('TEST SMS RECEIVED:', JSON.stringify(req.body, null, 2));
     
     res.json({
         success: true,
-        message: 'Test received',
+        message: 'Test received successfully',
         data: req.body,
         timestamp: new Date().toISOString()
     });
@@ -78,28 +87,16 @@ app.post('/test/sms', authenticate, (req, res) => {
 app.use((req, res) => {
     res.status(404).json({
         success: false,
-        error: 'Not found'
+        error: 'Endpoint not found'
     });
 });
 
 app.listen(PORT, () => {
     console.log('=======================================');
-    console.log('SMS Webhook API -Damixen18');
+    console.log('SMS Webhook API - Louis Vuitton');
     console.log('=======================================');
-    console.log('Server started on port', PORT);
-    console.log('API Key:', API_KEY === 'dev-secret-key' ? 'DEV MODE' : 'CONFIGURED');
+    console.log('Server started on port:', PORT);
+    console.log('API Key configured:', API_KEY !== 'dev-secret-key');
     console.log('Time:', new Date().toISOString());
     console.log('=======================================');
 });
-```
-
----
-
-### **📄 Fichier 3 : `.gitignore`**
-
-Créez un nouveau fichier nommé `.gitignore` :
-```
-node_modules
-npm-debug.log
-.env
-.DS_Store
