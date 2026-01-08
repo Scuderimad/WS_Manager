@@ -26,7 +26,7 @@ function authenticate(req, res, next) {
 app.get('/', (req, res) => {
     res.json({ 
         status: 'OK', 
-        service: 'SMS Webhook API - Louis Vuitton',
+        service: 'SMS Webhook API - TEST Imaden18',
         version: '1.0.0',
         timestamp: new Date().toISOString(),
         endpoints: {
@@ -152,7 +152,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log('╔══════════════════════════════════════════════════════════╗');
     console.log('║                                                          ║');
-    console.log('║     🚀 SMS Webhook API - Louis Vuitton                   ║');
+    console.log('║     🚀 SMS Webhook API - TEST Imaden                   ║');
     console.log('║                                                          ║');
     console.log('╚══════════════════════════════════════════════════════════╝');
     console.log('');
